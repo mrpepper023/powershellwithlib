@@ -1,7 +1,7 @@
 @set PSROOT=%CD%&&powershell -NoProfile -ExecutionPolicy Unrestricted "$s=[scriptblock]::create((gc \"%~f0\"|?{$_.readcount -gt 1})-join\"`n\");&$s" %*&goto:eof
 
 #' --------------------------------------------------------------------
-#' ã“ã“ã‹ã‚‰æ™®é€šã«Powershellã§è¨˜è¿°ã™ã‚‹
+#' ‚±‚±‚©‚ç•’Ê‚ÉPowershell‚Å‹Lq‚·‚é
 #' --------------------------------------------------------------------
 
 . "$(Convert-Path .)\pslib\test.ps1"
@@ -11,7 +11,7 @@ testout("piyo")
 
 Write-Host (Get-WmiObject Win32_OperatingSystem).Caption
 Write-Host $PSVersionTable
-
+Write-Host "ŠJ”­ŠÇ—ƒc[ƒ‹"
 
 if ($true) {Read-Host "Press [ENTER]"; Exit}
 
@@ -33,7 +33,7 @@ $Shortcut.IconLocation = "C:\Windows\System32\windowspowershell\v1.0\powershell.
 $Shortcut.WorkingDirectory = "."
 $Shortcut.Save()
 
-# ãƒ•ã‚¡ã‚¤ãƒ«ã®å­˜åœ¨ç¢ºèª
+# ƒtƒ@ƒCƒ‹‚Ì‘¶İŠm”F
 ForEach($f in $args) {
     if (Test-Path $f) {
         Write-Host $f is found!
@@ -42,20 +42,20 @@ ForEach($f in $args) {
     }
 }
 
-# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆ
-New-Item ãƒ•ã‚©ãƒ«ãƒ€ãƒ‘ã‚¹ -ItemType Directory -Force
+# ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬
+New-Item ƒtƒHƒ‹ƒ_ƒpƒX -ItemType Directory -Force
 
-# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä½œæˆï¼ˆéšå±¤ã¾ã§å¼·åˆ¶çš„ã«ä½œã‚‹ï¼‰
+# ƒfƒBƒŒƒNƒgƒŠ‚Ìì¬iŠK‘w‚Ü‚Å‹­§“I‚Éì‚éj
 New-Item ".\path\to\dir" -ItemType Directory -ErrorAction SilentlyContinue
 
-# ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®è¤‡è£½ï¼ˆéšå±¤ã¾ã§å¼·åˆ¶çš„ã«ä½œã‚‹ï¼‰
+# ƒfƒBƒŒƒNƒgƒŠ‚Ì•¡»iŠK‘w‚Ü‚Å‹­§“I‚Éì‚éj
 Copy-Item -Recurse dir1 dir2
 
 
-# æ–‡å­—åˆ—ç½®æ›
+# •¶š—ñ’uŠ·
 "abc123" -replace "([a-z]+)\d{3}", '000$1'
 
-# æ–‡å­—åˆ—åˆ†å‰²ãƒ»çµåˆ
+# •¶š—ñ•ªŠ„EŒ‹‡
 $nums = "2016-04-01" -split "-"
 $strs = @("abc", "def")
 $strs -join ""
@@ -63,7 +63,7 @@ $strs -join ""
 # Trim
 " abc ".Trim()
 
-# GridViewã§ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºã™ã‚‹
+# GridView‚Åƒf[ƒ^‚ğ•\¦‚·‚é
 $users = @()
 $u = New-Object psobject -Property @{ Name = "taro"; Age = 19 }
 $users += $u
@@ -71,7 +71,7 @@ $u = New-Object psobject -Property @{ Name = "jiro"; Age = 15 }
 $users += $u
 $users | Out-GridView
 
-# æ¯”è¼ƒæ¼”ç®—å­
+# ”äŠr‰‰Zq
 "A" -eq "A"                 # True
 "A" -ne "Z"                 # True
 "Z" -gt "A"                 # True
@@ -89,50 +89,50 @@ $users | Out-GridView
 "ABC" -match "^[A-Z]{1,3}$" # True
 "ABC" -notmatch "^Z"        # True
 
-# ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæ¼”ç®—å­
-"{0}"     -f 5         # 5     {0}ã§å¼•æ•°ã®1ç•ªç›®ã‚’å‚ç…§
-"{0} {1}" -f 5,6       # 5 6   {0}{1}ã§å¼•æ•°ã®1ç•ªç›®ã€2ç•ªç›®ã‚’å‚ç…§
-"{0} {1} {0}" -f 5,6   # 5 6 5 {0}{1}{0}ã¨ã™ã‚‹ã¨å¼•æ•°ã®1ç•ªç›®ã‚’2åº¦å‚ç…§ã™ã‚‹
-"COLOR:{0,4}"  -f "Red"   # COLOR: Red  4æ¡ã§å³å¯„ã›
-"COLOR:{0,-4}" -f "Red"   # COLOR:Red   4æ¡ã§å·¦å¯„ã›
-"COLOR:{0,4}"  -f "Black" # COLOR:Black æ¡ã‚’è¶…ãˆã¦ã„ã‚Œã°ãã®ã¾ã¾
-"{0:00}"   -f 1      # 01    è¶³ã‚Šãªã„æ¡ã‚’0ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
-"{0:00.0}" -f 1      # 01.0  å°æ•°ç‚¹ã‚‚0ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
-"{0:00.0}" -f 123.45 # 123.5 æ¡ã‚’è¶…ãˆãŸã‚‰ã€æ•´æ•°éƒ¨ã¯ãã®ã¾ã¾ã€å°æ•°ç‚¹ä»¥ä¸‹ã¯å››æ¨äº”å…¥ã•ã‚Œã‚‹
-"{0:#.#}" -f 1.2  # 1.2  å¯¾å¿œã™ã‚‹æ¡ãŒã‚ã‚Œã°ãã®ã¾ã¾
-"{0:#.#}" -f 1.29 # 1.3  å°æ•°ç‚¹ä»¥ä¸‹ãŒå¯¾å¿œã™ã‚‹æ¡ã‚’è¶…ãˆã¦ã„ã‚Œã°å››æ¨äº”å…¥
-"{0:#}"   -f 123  # 123  æ•´æ•°éƒ¨ãŒå¯¾å¿œã™ã‚‹æ¡ã‚’è¶…ãˆã¦ã„ã‚Œã°ãã®ã¾ã¾
+# ƒtƒH[ƒ}ƒbƒg‰‰Zq
+"{0}"     -f 5         # 5     {0}‚Åˆø”‚Ì1”Ô–Ú‚ğQÆ
+"{0} {1}" -f 5,6       # 5 6   {0}{1}‚Åˆø”‚Ì1”Ô–ÚA2”Ô–Ú‚ğQÆ
+"{0} {1} {0}" -f 5,6   # 5 6 5 {0}{1}{0}‚Æ‚·‚é‚Æˆø”‚Ì1”Ô–Ú‚ğ2“xQÆ‚·‚é
+"COLOR:{0,4}"  -f "Red"   # COLOR: Red  4Œ…‚Å‰EŠñ‚¹
+"COLOR:{0,-4}" -f "Red"   # COLOR:Red   4Œ…‚Å¶Šñ‚¹
+"COLOR:{0,4}"  -f "Black" # COLOR:Black Œ…‚ğ’´‚¦‚Ä‚¢‚ê‚Î‚»‚Ì‚Ü‚Ü
+"{0:00}"   -f 1      # 01    ‘«‚è‚È‚¢Œ…‚ğ0ƒpƒfƒBƒ“ƒO
+"{0:00.0}" -f 1      # 01.0  ¬”“_‚à0ƒpƒfƒBƒ“ƒO
+"{0:00.0}" -f 123.45 # 123.5 Œ…‚ğ’´‚¦‚½‚çA®”•”‚Í‚»‚Ì‚Ü‚ÜA¬”“_ˆÈ‰º‚ÍlÌŒÜ“ü‚³‚ê‚é
+"{0:#.#}" -f 1.2  # 1.2  ‘Î‰‚·‚éŒ…‚ª‚ ‚ê‚Î‚»‚Ì‚Ü‚Ü
+"{0:#.#}" -f 1.29 # 1.3  ¬”“_ˆÈ‰º‚ª‘Î‰‚·‚éŒ…‚ğ’´‚¦‚Ä‚¢‚ê‚ÎlÌŒÜ“ü
+"{0:#}"   -f 123  # 123  ®”•”‚ª‘Î‰‚·‚éŒ…‚ğ’´‚¦‚Ä‚¢‚ê‚Î‚»‚Ì‚Ü‚Ü
 "{0:0}" -f 10.9    # 11
 "{0:0.0}" -f 10.9  # 10.9
 "{0:0.0}" -f 10.99 # 11.0
-"{0:N}" -f 1000  # 1,000.00  æ¨™æº–
-"{0:N0}" -f 1000 # 1,000     å°æ•°ç‚¹ä»¥ä¸‹å››æ¨äº”å…¥
-"{0:N1}" -f 1000 # 1,000.0   å°æ•°ç‚¹ä»¥ä¸‹1æ¡ã§å››æ¨äº”å…¥
-"NUM:{0:000}" -F 2            # NUM:002  â€»3æ¡0ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
-"NUM:{0:000}" -F 1.99         # NUM:002  â€»3æ¡0ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
-"NUM:{0:0.0}" -F 1.99         # NUM:2.0  â€»å°æ•°ç‚¹1ä½ã¾ã§0ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
-"NUM:{0:0.00}" -F 1.99        # NUM:1.99 â€»å°æ•°ç‚¹2ä½ã¾ã§0ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
-"NUM:{0:#}" -F 1.99           # NUM:2    â€»1æ¡ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+"{0:N}" -f 1000  # 1,000.00  •W€
+"{0:N0}" -f 1000 # 1,000     ¬”“_ˆÈ‰ºlÌŒÜ“ü
+"{0:N1}" -f 1000 # 1,000.0   ¬”“_ˆÈ‰º1Œ…‚ÅlÌŒÜ“ü
+"NUM:{0:000}" -F 2            # NUM:002  ¦3Œ…0ƒpƒfƒBƒ“ƒO
+"NUM:{0:000}" -F 1.99         # NUM:002  ¦3Œ…0ƒpƒfƒBƒ“ƒO
+"NUM:{0:0.0}" -F 1.99         # NUM:2.0  ¦¬”“_1ˆÊ‚Ü‚Å0ƒpƒfƒBƒ“ƒO
+"NUM:{0:0.00}" -F 1.99        # NUM:1.99 ¦¬”“_2ˆÊ‚Ü‚Å0ƒpƒfƒBƒ“ƒO
+"NUM:{0:#}" -F 1.99           # NUM:2    ¦1Œ…ƒpƒfƒBƒ“ƒO
 "NUM:{0:#.#}" -F 1.99         # NUM:2
 "NUM:{0:#.##}" -F 1.99        # NUM:1.99
 "NUM:{0:0%}" -F 0.33          # NUM:33%
 
-# ãƒ«ãƒ¼ãƒ—è¨˜æ³•ã¨ç°¡ç•¥è¡¨è¨˜2ç¨®
+# ƒ‹[ƒv‹L–@‚ÆŠÈ—ª•\‹L2í
 for ($i = 1; $i -le 3; $i++) {
     echo "DEBUG: $i"
 }
 $nums = @(1,2,3); foreach ($n in $nums) { write-host DEBUG: $n }
 1..3 | % { echo "DEBUG: $_" }
 
-# é€£æƒ³é…åˆ—
+# ˜A‘z”z—ñ
 $gender = @{"taro" = "man"; "jiro" = "man"; "hanako" = "woman"}
 $gender["jiro"]
 $gender.Keys | % { echo $_+","+$gender[$_] }
 $gender.GetEnumerator() | ? { $_.key -in ("taro","jiro") }
 
-# ç‰¹æ®Šãƒ‘ã‚¹ã®å–å¾—
+# “ÁêƒpƒX‚Ìæ“¾
 Write-Host [Environment]::GetFolderPath("Desktop")
-# ç‰¹æ®Šãƒ‘ã‚¹ã®è‰²ã€…
+# “ÁêƒpƒX‚ÌFX
 # AdminTools,ApplicationData,CDBurning,CommonAdminTools,CommonApplicationData,CommonDesktopDirectory
 # CommonDocuments,CommonMusic,CommonOemLinks,CommonPictures,CommonProgramFiles,CommonProgramFilesX86
 # CommonPrograms,CommonStartMenu,CommonStartup,CommonTemplates,CommonVideos,Cookies,Desktop
@@ -141,30 +141,30 @@ Write-Host [Environment]::GetFolderPath("Desktop")
 # ProgramFiles,ProgramFilesX86,Programs,Recent,Resources,SendTo,StartMenu,Startup,System,SystemX86
 # Templates,UserProfile,Windows
 
-# ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆã®ä½œæˆ
+# ƒVƒ‡[ƒgƒJƒbƒg‚Ìì¬
 $WshShell = New-Object -ComObject WScript.Shell
 $ShortCut = $WshShell.CreateShortcut("C:\Users\1st\Desktop\mycalc.lnk")
 $ShortCut.TargetPath = "calc.exe"
 $Shortcut.Arguments = "-Nop -Executionpolicy bypass"
 $ShortCut.Save()
 
-# æ–‡å­—åˆ—ç½®æ›ã¨èª­ã¿æ›¸ãã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°
+# •¶š—ñ’uŠ·‚Æ“Ç‚İ‘‚«‚ÌƒGƒ“ƒR[ƒfƒBƒ“ƒO
 $in_file = 'in.txt'
 $out_file = 'out.txt'
-$find = 'æ—¥æœ¬èª'
-$replace = 'ã«ã»ã‚“ã”'
+$find = '“ú–{Œê'
+$replace = '‚É‚Ù‚ñ‚²'
 (Get-Content -Encoding UTF8 $in_file).replace($find, $replace) | Set-Content -Encoding default $out_file
 
 # UTF8-BOM CRLF
-@("Hello World ã¯ã‚ã¯ã‚","Foo Bar ãµãƒ¼ã°ãƒ¼") `
+@("Hello World ‚Í‚ë‚Í‚ë","Foo Bar ‚Ó[‚Î[") `
     | Out-File -FilePath c:\Users\1st\Desktop\utf8-bom-crlf.txt -Encoding utf8
-# UTF8-BOMLess LF(Byteã§æ›¸ãè¾¼ã‚€å ´åˆã€Out-Fileã¯ä½¿ãˆãªã„ã®ã§æ³¨æ„)
-@("Hello World ã¯ã‚ã¯ã‚","Foo Bar ãµãƒ¼ã°ãƒ¼") `
+# UTF8-BOMLess LF(Byte‚Å‘‚«‚Şê‡AOut-File‚Íg‚¦‚È‚¢‚Ì‚Å’ˆÓ)
+@("Hello World ‚Í‚ë‚Í‚ë","Foo Bar ‚Ó[‚Î[") `
     | %{ $_+"`n" } `
     | ForEach-Object{ [Text.Encoding]::UTF8.GetBytes($_) } `
     | Set-Content -Path c:\Users\1st\Desktop\utf8-bomless-lf.txt -Encoding Byte
 
-# BOMé™¤å»
+# BOMœ‹
 [System.IO.File]::WriteAllLines("utf8-bom.txt", "utf8-nobom.txt")
 
 # https://tex2e.github.io/blog/powershell/array
