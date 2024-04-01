@@ -24,7 +24,48 @@ Write-Host (Get-WmiObject Win32_OperatingSystem).Caption
 # Powershell Version
 Write-Host $PSVersionTable
 
+# selectと無名ハッシュテーブル
+Get-ChildItem *.txt | Select-Object Name, LastWriteTime, @{Name = "Youbi"; Expression = {$_.LastWriteTime.DayOfWeek}}
 
+# スクリプトブロックを関数内関数のように使う
+$youbi = { $this.LastWriteTime.DayOfWeek }
+Get-ChildItem *.txt | % { $_ | Add-Member -MemberType ScriptProperty -Name "youbi" -Value $youbi -PassThru } | Select-Object Name, LastWriteTime, youbi
+
+# ファイルチェックサム
+Get-FileHash -Algorithm MD5 "C:\foo.exe"
+
+# エコーなしのキー入力待ち
+Write-Host -NoNewLine 'Press any key to continue...';
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
+
+# From CSV
+Get-Content .\1.csv | ConvertFrom-Csv
+Get-Content .\2.csv | ConvertFrom-Csv -Delimiter "`t"
+Get-Content .\1.csv | Select-Object -Skip 1 | ConvertFrom-Csv -Header "ID","Namae","Nenrei"
+
+# To CSV
+Get-ChildItem *.txt | Select-Object FullName, FileSize, LastWriteTime | ConvertTo-Csv -NoTypeInformation
+Get-ChildItem * | Select-Object FullName, FileSize, LastWriteTime | ConvertTo-Csv -Delimiter "`t"
+
+# JSONの解釈
+Get-Content .\test.json -Encoding UTF8 | ConvertFrom-Json
+
+
+# ファイル検索
+Get-ChildItem -Recurse -Filter '*.exe'
+Get-ChildItem $env:USERPROFILE\tmp -Include *.txt,*.jpg -Exclude *.bak.txt -Recurse
+Get-ChildItem *.txt | Select-Object -ExpandProperty FullName | % {Write-Host $_}
+
+# WEB Access GET
+$res = Invoke-WebRequest http://www.yahoo.co.jp/
+$res.Content | Out-File index.html
+Write-Host $res.Links.href
+# WEB Access POST
+$params = @{ name = "taro"; age = 10 } 
+$res = Invoke-WebRequest -Method Post -Uri http://example.com/ -Body $params
+
+
+# ショートカットを作る
 $WshShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut("C:\test.lnk")
 $Shortcut.TargetPath = "C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe"
@@ -121,7 +162,7 @@ $users | Out-GridView
 for ($i = 1; $i -le 3; $i++) {
     echo "DEBUG: $i"
 }
-$nums = @(1,2,3); foreach ($n in $nums) { write-host DEBUG: $n }
+$nums = @(1,2,3); ForEach ($n In $nums) { Write-Host DEBUG: $n }
 1..3 | % { echo "DEBUG: $_" }
 
 # 連想配列
