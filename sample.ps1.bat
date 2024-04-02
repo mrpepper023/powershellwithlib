@@ -6,7 +6,12 @@
 
 . "$(Convert-Path .)\pslib\test.ps1"
 . "$(Convert-Path .)\pslib\shortcut.ps1"
+. "$(Convert-Path .)\pslib\utility.ps1"
 
+$a = '"Test test"'
+echo $a
+$b = UnquoteString($a)
+echo $b
 testout("piyo")
 
 Write-Host (Get-WmiObject Win32_OperatingSystem).Caption
@@ -55,6 +60,18 @@ Get-Content .\test.json -Encoding UTF8 | ConvertFrom-Json
 Get-ChildItem -Recurse -Filter '*.exe'
 Get-ChildItem $env:USERPROFILE\tmp -Include *.txt,*.jpg -Exclude *.bak.txt -Recurse
 Get-ChildItem *.txt | Select-Object -ExpandProperty FullName | % {Write-Host $_}
+
+# ファイル検索して最も新しいものを選ぶ
+(Get-ChildItem -Path $ARCPATH -Include python-3.9.*.zip -Recurse | Sort-Object LastWriteTime -DESC)[0].FullName
+
+
+
+# 列挙したパスの中から、ファイルシステム上に存在するパスを選ぶ
+$ARCPATH = (@(
+"",
+"",
+""
+)|?(Test-Path $_})[0]
 
 # WEB Access GET
 $res = Invoke-WebRequest http://www.yahoo.co.jp/
