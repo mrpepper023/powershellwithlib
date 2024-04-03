@@ -5,7 +5,6 @@
 #' --------------------------------------------------------------------
 
 . "$(Convert-Path .)\pslib\test.ps1"
-. "$(Convert-Path .)\pslib\shortcut.ps1"
 . "$(Convert-Path .)\pslib\utility.ps1"
 
 $a = '"Test test"'
@@ -13,6 +12,11 @@ echo $a
 $b = UnquoteString($a)
 echo $b
 testout("piyo")
+testout((Convert-Path .)+"\test")
+
+$path = ((Convert-Path .)+"\test")
+
+Get-ChildItem -Path "$path" -Include "tes*.txt"
 
 Write-Host (Get-WmiObject Win32_OperatingSystem).Caption
 Write-Host $PSVersionTable
@@ -71,7 +75,7 @@ $ARCPATH = (@(
 "",
 "",
 ""
-)|?(Test-Path $_})[0]
+)|?{Test-Path $_})[0]
 
 # WEB Access GET
 $res = Invoke-WebRequest http://www.yahoo.co.jp/
